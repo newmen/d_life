@@ -43,20 +43,14 @@ unittest {
     assert(a.x() == 10);
     assert(a.y() == 5);
 
+    int defaultState = 0;
     class TestAgregator : Agregator {
-        private int _value;
-
-        this(int defaultValue) {
-            _value = defaultValue;
-        }
-
         override int initValue() {
-            return _value;
+            return defaultState;
         }
     }
 
-    int defaultState = 0;
-    a.fill(new TestAgregator(defaultState));
+    a.fill(new TestAgregator);
     assert(a.state(0, 0) == defaultState);
     assert(a.state(2, 2) == defaultState);
 
@@ -66,10 +60,11 @@ unittest {
         }
     }
 
-    a.next(new TestChanger);
+    auto changer = new TestChanger;
+    a.next(changer);
     assert(a.state(0, 0) == 1);
     assert(a.state(2, 2) == 1);
-    a.next(new TestChanger);
+    a.next(changer);
     assert(a.state(0, 0) == 0);
     assert(a.state(2, 2) == 0);
 }
