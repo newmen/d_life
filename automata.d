@@ -15,8 +15,10 @@ class Automata : Celler {
     }
 
     override void fill(Agregator agr) {
-        foreach (ref state; _cells[_h]) {
-            state = agr.initValue();
+        for (size_t iy = 0; iy < _y; iy++) {
+            for (size_t ix = 0; ix < _x; ix++) {
+                _cells[_h][i(ix, iy)] = agr.initValue(ix, iy);
+            }
         }
     }
 
@@ -24,17 +26,29 @@ class Automata : Celler {
     override size_t y() const { return _y; }
 
     override int state(size_t x, size_t y) const {
-        return _cells[_h][y * _x + x];
+        return _cells[_h][i(x, y)];
     }
 
     override void next(Changer changer) {
         size_t next = (_h == 0) ? 1 : 0;
         for (size_t iy = 0; iy < _y; iy++) {
             for (size_t ix = 0; ix < _x; ix++) {
-                _cells[next][iy * _x + ix] = changer.next(this, ix, iy);
+                _cells[next][i(ix, iy)] = changer.next(this, ix, iy);
             }
         }
         _h = next;
+    }
+
+    const(int)[] slice() {
+        return _cells[_h];
+    }
+
+    void invert(size_t x, size_t y) {
+        _cells[_h][i(x, y)] = (_cells[_h][i(x, y)] == 0) ? 1 : 0;
+    }
+
+    private size_t i(size_t x, size_t y) const {
+        return _x * y + x;
     }
 }
 
@@ -45,7 +59,7 @@ unittest {
 
     int defaultState = 0;
     class TestAgregator : Agregator {
-        override int initValue() {
+        override int initValue(size_t x, size_t y) const {
             return defaultState;
         }
     }
