@@ -1,4 +1,5 @@
 lib/
 *.swp
 *.o
+moc_*
 life

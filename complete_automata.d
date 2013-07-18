@@ -16,12 +16,12 @@ extern(C++) {
         size_t y() const;
     }
 
-    AutomataInterface createAutomata(size_t x, size_t y) {
+    AutomataInterface createAutomata(uint x, uint y) {
         return new CompleteAutomata(x, y);
     }
 }
 
-class CompleteAutomata : AutomataInterface {
+export class CompleteAutomata : AutomataInterface {
     Automata automata;
     const(int)[] slice;
 

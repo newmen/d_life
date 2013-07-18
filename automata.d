@@ -2,10 +2,11 @@ public import celler;
 import agregator, changer;
 
 class Automata : Celler {
-    private auto _cells = new int[][2];
+    private int[][2] _cells;
     private size_t _x, _y, _h = 0;
 
     this(size_t x, size_t y) {
+        _cells = new int[][2];
         _x = x;
         _y = y;
 
