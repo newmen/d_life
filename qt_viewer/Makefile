@@ -15,10 +15,10 @@ CFLAGS        = -m64 -g -Wall -W -D_REENTRANT $(DEFINES)
 CXXFLAGS      = -m64 -g -Wall -W -D_REENTRANT $(DEFINES)
 INCPATH       = -I/home/newmen/Qt-4.8.4/mkspecs/linux-g++-64 -I. -I/home/newmen/Qt-4.8.4/include/QtCore -I/home/newmen/Qt-4.8.4/include/QtGui -I/home/newmen/Qt-4.8.4/include -I.
 LINK          = dmd
-LFLAGS        = -debug 
+LFLAGS        = -gc
 LIBS          = $(SUBLIBS)  -L-L/home/newmen/Qt-4.8.4/lib /home/newmen/projects/d/life/obj/*.o -L-lQtGui -L-L/usr/X11R6/lib64 -L-lQtCore -L-lpthread -L-lstdc++
 AR            = ar cqs
-RANLIB        = 
+RANLIB        =
 QMAKE         = /home/newmen/Qt-4.8.4/bin/qmake
 TAR           = tar -cf
 COMPRESS      = gzip -9f
@@ -86,7 +86,7 @@ DIST          = /home/newmen/Qt-4.8.4/mkspecs/common/unix.conf \
 		/home/newmen/Qt-4.8.4/mkspecs/features/include_source_dir.prf \
 		cellular_life.pro
 QMAKE_TARGET  = cellular_life
-DESTDIR       = 
+DESTDIR       =
 TARGET        = cellular_life
 
 first: all
@@ -113,7 +113,7 @@ first: all
 
 all: Makefile $(TARGET)
 
-$(TARGET):  $(OBJECTS)  
+$(TARGET):  $(OBJECTS)
 	$(LINK) $(LFLAGS) -of$(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: cellular_life.pro  /home/newmen/Qt-4.8.4/mkspecs/linux-g++-64/qmake.conf /home/newmen/Qt-4.8.4/mkspecs/common/unix.conf \
@@ -172,12 +172,12 @@ Makefile: cellular_life.pro  /home/newmen/Qt-4.8.4/mkspecs/linux-g++-64/qmake.co
 qmake:  FORCE
 	@$(QMAKE) -o Makefile cellular_life.pro
 
-dist: 
-	@$(CHK_DIR_EXISTS) .tmp/cellular_life1.0.0 || $(MKDIR) .tmp/cellular_life1.0.0 
+dist:
+	@$(CHK_DIR_EXISTS) .tmp/cellular_life1.0.0 || $(MKDIR) .tmp/cellular_life1.0.0
 	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/cellular_life1.0.0/ && $(COPY_FILE) --parents mainwindow.h renderarea.h button.h playbutton.h automatainterface.h .tmp/cellular_life1.0.0/ && $(COPY_FILE) --parents main.cpp mainwindow.cpp renderarea.cpp button.cpp playbutton.cpp .tmp/cellular_life1.0.0/ && (cd `dirname .tmp/cellular_life1.0.0` && $(TAR) cellular_life1.0.0.tar cellular_life1.0.0 && $(COMPRESS) cellular_life1.0.0.tar) && $(MOVE) `dirname .tmp/cellular_life1.0.0`/cellular_life1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/cellular_life1.0.0
 
 
-clean:compiler_clean 
+clean:compiler_clean
 	-$(DEL_FILE) $(OBJECTS)
 	-$(DEL_FILE) *~ core *.core
 
@@ -185,7 +185,7 @@ clean:compiler_clean
 ####### Sub-libraries
 
 distclean: clean
-	-$(DEL_FILE) $(TARGET) 
+	-$(DEL_FILE) $(TARGET)
 	-$(DEL_FILE) Makefile
 
 
@@ -231,7 +231,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean 
+compiler_clean: compiler_moc_header_clean
 
 ####### Compile
 
@@ -260,16 +260,16 @@ playbutton.o: playbutton.cpp playbutton.h \
 		button.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o playbutton.o playbutton.cpp
 
-moc_mainwindow.o: moc_mainwindow.cpp 
+moc_mainwindow.o: moc_mainwindow.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
-moc_renderarea.o: moc_renderarea.cpp 
+moc_renderarea.o: moc_renderarea.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_renderarea.o moc_renderarea.cpp
 
-moc_button.o: moc_button.cpp 
+moc_button.o: moc_button.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_button.o moc_button.cpp
 
-moc_playbutton.o: moc_playbutton.cpp 
+moc_playbutton.o: moc_playbutton.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_playbutton.o moc_playbutton.cpp
 
 ####### Install
