@@ -1,5 +1,7 @@
 import automata, agregator, changer;
 
+AutomataInterface globalAutomata;
+
 extern(C++) {
     interface AutomataInterface {
         void next();
@@ -17,7 +19,8 @@ extern(C++) {
     }
 
     AutomataInterface createAutomata(uint x, uint y) {
-        return new CompleteAutomata(x, y);
+        if (!globalAutomata) globalAutomata = new CompleteAutomata(x, y);
+        return globalAutomata;
     }
 }
 
