@@ -9,8 +9,6 @@ QT       += core gui
 TARGET = cellular_life
 TEMPLATE = app
 
-LIBS += /home/newmen/projects/d/life/obj/*.o
-
 SOURCES += main.cpp\
         mainwindow.cpp \
     renderarea.cpp \

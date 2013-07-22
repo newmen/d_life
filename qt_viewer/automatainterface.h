@@ -3,8 +3,6 @@
 
 class AutomataInterface {
 public:
-    virtual ~AutomataInterface() {}
-
     virtual void next() = 0;
 
     virtual void save() = 0;

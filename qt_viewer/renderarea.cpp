@@ -13,7 +13,6 @@ RenderArea::RenderArea(QWidget* parent) : QWidget(parent)
 
 RenderArea::~RenderArea() {
     delete _timer;
-    delete _cellular;
 }
 
 void RenderArea::next() {
