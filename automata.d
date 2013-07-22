@@ -58,7 +58,7 @@ unittest {
     assert(a.x() == 10);
     assert(a.y() == 5);
 
-    int defaultState = 0;
+    int defaultState = 555;
     class TestAgregator : Agregator {
         override int initValue(size_t x, size_t y) const {
             return defaultState;
@@ -69,17 +69,42 @@ unittest {
     assert(a.state(0, 0) == defaultState);
     assert(a.state(2, 2) == defaultState);
 
+    auto zag = new ZeroAgregator;
+
     class TestChanger : Changer {
         override int value(int current, in uint[int] _) const {
             return (current == 0) ? 1 : 0;
         }
     }
 
-    auto changer = new TestChanger;
-    a.next(changer);
+    a.fill(zag);
+    auto tchanger = new TestChanger;
+    a.next(tchanger);
     assert(a.state(0, 0) == 1);
     assert(a.state(2, 2) == 1);
-    a.next(changer);
+
+    a.next(tchanger);
     assert(a.state(0, 0) == 0);
     assert(a.state(2, 2) == 0);
+
+    a.fill(zag);
+    auto lfchanger = new LifeChanger;
+    a.invert(0, 1);
+    a.invert(0, 0);
+    a.invert(0, 4);
+
+    a.next(lfchanger);
+    // TODO: debug it
+    assert(a.state(0, 1) == 0);
+    assert(a.state(0, 0) == 1);
+    assert(a.state(0, 4) == 0);
+    assert(a.state(1, 0) == 1);
+    assert(a.state(9, 0) == 1);
+
+    a.next(lfchanger);
+    assert(a.state(0, 1) == 1);
+    assert(a.state(0, 0) == 1);
+    assert(a.state(0, 4) == 1);
+    assert(a.state(1, 0) == 0);
+    assert(a.state(9, 0) == 0);
 }
